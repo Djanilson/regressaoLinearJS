@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<title></title>
+
+		<style>
+			body {
+				height: 100%;
+				padding: 10px;
+			}
+			#myCanvas {
+				display: inline-block;
+				/*height: 500px;*/
+				/*width: 500px;*/
+				border: 1px solid #aaa;
+			}
+		</style>
+	</head>
+	<body>
+		<div style="display: flex;">
+			<canvas id="myCanvas" width="600" height="400"></canvas>
+
+			<div style="flex: 1; padding: 10px;">
+				<p>
+					<strong>b0: </strong><span class="valorB"></span>
+				</p>
+				<p>
+					<strong>b1: </strong><span class="valorA"></span>
+				</p>
+				<p>
+					<strong>(P): </strong><span class="pointValue"></span>
+				</p>
+				<p>
+					<strong>FX(p): </strong><span class="valorFX"></span>
+				</p>
+			</div>
+		</div>
+
+		<script src="./script.js"></script>
+	</body>
+</html>
