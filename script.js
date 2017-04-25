@@ -11,9 +11,8 @@ var b1,
 	somay = 0,
 	somax2 = 0,
 	cnn,
-	cttx;
-
-var mtd = 10;
+	cttx,
+	mtd = 10;
 
 function createLinePath(ctx, start, end, color = "gray") {
 	ctx.beginPath();
@@ -66,6 +65,7 @@ function makeGrid(ctx, cv) {
 		hAux -= mtd;
 		wAux -= mtd;
 	}
+
 	ctx.lineWidth = 1;
 }
 
@@ -175,11 +175,9 @@ function drawResults(b0, b1, point, fx) {
 drawPT(150);
 
 
-/*****************
-somax2 = 0;
-somax = 0;
-somay = 0;
-******************/
+/**
+ * TODO: Criar função para calcular a regreção e a Reta.
+ */
 
 for(i = 0; i < x.length; i++) {
 	somaxy += x[i] * y[i];
@@ -198,6 +196,4 @@ document.querySelector(".valorB").innerHTML = b0;
 document.querySelector(".valorFX").innerHTML = fx;
 document.querySelector(".pointValue").innerHTML = p;
 
-
-
-// drawResults(b0, b1, p, fx);
+drawResults(b0, b1, p, fx);
