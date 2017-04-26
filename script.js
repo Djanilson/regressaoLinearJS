@@ -1,18 +1,22 @@
-var b1,
+var el = function (element) { return document.querySelector(element); },
+	els = function (element) { return document.querySelectorAll(element); },
+	b1,
 	b0,
 	fx,
 
-	x = [ 10,  11,  12,  13,  14,  15],
-	y = [100, 112, 119, 130, 139, 142],
-	p = 16,
+	x = [],
+	y = [],
+	p,
 
 	somaxy = 0,
 	somax = 0,
 	somay = 0,
 	somax2 = 0,
+	somay2 = 0,
 	cnn,
 	cttx,
-	mtd = 10;
+	mtd = 10,
+	lineThinkness = 1;
 
 function createLinePath(ctx, start, end, color = "gray") {
 	ctx.beginPath();
@@ -89,19 +93,22 @@ function createSquare(ctx, cv, xPos, yPos, color = "red") {
 	ctx.fillStyle = color;
 	ctx.fillRect(xp, yp, dotScale, dotScale);
 }
-
-function drawPT(scale) {
+var ct = 0;
+function drawPlanGraph(scale) {
     var canvas = document.getElementById('myCanvas'),
 		ctx = canvas.getContext('2d'),
 		pesoText,
 		alturaText,
-		nscale = 2.3;
+		nscale = 3;
 	cnn = canvas;
 	cttx = ctx;
 
-	// #scale
-	ctx.translate(0, -(canvas.height + (canvas.height / 3.3)));
-	ctx.scale(nscale, nscale);
+	if (ct === 0) {
+		// #scale
+		ctx.translate(0, -(canvas.height + (canvas.height)));
+		ctx.scale(nscale, nscale);
+		ct++;
+	}
 
 	ctx.fillStyle = '#fafafa';
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -123,17 +130,12 @@ function drawPT(scale) {
 		"blue"
 	);
 
-	createLinePath(
-		ctx,
-		{x: x[0], y: y[0]},
-		{x: 500 - (500-x[x.length-1]), y: 500 - (500 - y[y.length-1])},
-		"wine"
-	);
-
- 	for (var i = 0; i < x.length; i++) {
-		// ctx.fillRect(x[i], canvas.y[i], 10, 10);
-		createSquare(ctx, canvas, x[i], y[i]);
- 	}
+	// createLinePath(
+	// 	ctx,
+	// 	{x: x[0], y: y[0]},
+	// 	{x: 500 - (500-x[x.length-1]), y: 500 - (500 - y[y.length-1])},
+	// 	"wine"
+	// );
 
 	ctx.font = "12px Arial";
 	ctx.fillStyle = "#333";
@@ -156,6 +158,11 @@ function drawResults(b0, b1, point, fx) {
 		xNormalized = (10*(point-10));
 	}
 
+
+ 	for (var i = 0; i < x.length; i++) {
+		createSquare(cttx, cnn, x[i], y[i]);
+ 	}
+
 	createLinePath(
 		cttx,
 		{x: b1, y: ((cnn.height+10) - b0)},
@@ -169,31 +176,79 @@ function drawResults(b0, b1, point, fx) {
 	cttx.fillText(resultText, p + cttx.measureText(resultText).width + 5,  (cnn.height - fx) + 90);
 }
 
-/////////////////
-// CALL EVENTS //
-/////////////////
-drawPT(150);
-
-
 /**
  * TODO: Criar função para calcular a regreção e a Reta.
  */
 
-for(i = 0; i < x.length; i++) {
-	somaxy += x[i] * y[i];
-	somax += x[i];
-	somay += y[i];
-	somax2 += x[i] * x[i];
+// var sXX = 0,
+// 	sYY = 0,
+// 	sXY = 0;
+
+function calcRegressao() {
+	b1 = 0;
+	b0 = 0;
+	fx = 0;
+	somax = 0;
+	somay = 0;
+	somax2 = 0;
+	somay2 = 0;
+	somaxy = 0;
+
+	for(i = 0; i < x.length; i++) {
+		somax += x[i];
+		somay += y[i];
+		somax2 += x[i] * x[i];
+		somay2 += y[i] * y[i];
+		somaxy += x[i] * y[i];
+	}
+
+	// sXX = somax2 - (p * (Math.pow(somax,2)));
+	// sXY = somaxy - (p * (somax*somay));
+	// sYY = somay2 - (p * (Math.pow(somay,2)));
+
+	// b1 = sXY / sXX;
+	b1 = (somaxy - ((somax * somay) / x.length)) / (somax2 - (Math.pow(somax,2) / x.length));
+	// b0 = somay - (b1 * somax);
+	b0 = (somay / y.length) - b1 * (somax / x.length);
+	fx = b0 + b1 * p;
+
+	var r2 = ((x.length * somaxy) - (somax * somay)) / Math.sqrt((x.length * somax2 - Math.pow(somax, 2)) * (x.length * somay2 - Math.pow(somay, 2)));
+
+	el(".valorDeX").innerHTML = "x = [" + x.join(", ") + "]";
+	el(".valorDeY").innerHTML = "y = [" + y.join(", ") + "]";
+	el(".valorDeP").innerHTML = "P = " + p;
+	el(".valorDeR2").innerHTML = r2;
+
+	el(".valorA").innerHTML = b1;
+	el(".valorB").innerHTML = b0;
+	el(".valorFX").innerHTML = fx;
+	// el(".pointValue").innerHTML = p;
+
+
+	drawResults(b0, b1, p, fx);
 }
 
-b1 = (somaxy - ((somax * somay) / x.length)) / (somax2 - (Math.pow(somax,2) / x.length));
-b0 = (somay / y.length) - b1 * (somax / x.length);
-fx = b0 + b1 * p;
+/*************************
+ * 		# EVENTS
+ *************************/
 
+drawPlanGraph(150);
 
-document.querySelector(".valorA").innerHTML = b1;
-document.querySelector(".valorB").innerHTML = b0;
-document.querySelector(".valorFX").innerHTML = fx;
-document.querySelector(".pointValue").innerHTML = p;
+function executarAcao () {
+	// cttx.clearRect(0, 0, cnn.width, cnn.height);
+	var valoresDeX = el("#xValues").value.split(",").map(function(item) {
+		    return parseInt(item, 10);
+		}),
+		valoresDeY = el("#yValues").value.split(",").map(function(item) {
+		    return parseInt(item, 10);
+		}),
+		valorDeP = el("#pValue").value.split(",");
 
-drawResults(b0, b1, p, fx);
+	x = valoresDeX;
+	y = valoresDeY;
+	p = valorDeP;
+
+	cttx.clearRect(0, 0, cnn.width, cnn.height);
+	drawPlanGraph();
+	calcRegressao();
+}

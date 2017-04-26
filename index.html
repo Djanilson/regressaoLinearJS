@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="UTF-8">
 
 		<title></title>
 
@@ -15,25 +16,94 @@
 				/*width: 500px;*/
 				border: 1px solid #aaa;
 			}
+
+			.flex {
+				display: flex;
+			}
+
+			.flexCol {
+				flex-direction: column;
+			}
+
+			.flex1 {
+				flex: 1;
+			}
+
+			.input label {
+				display: block;
+			}
+
+			.input input {
+				width: 100%;
+			}
 		</style>
 	</head>
 	<body>
-		<div style="display: flex;">
-			<canvas id="myCanvas" width="600" height="400"></canvas>
+		<div class="flex">
+			<div class="flex flex1 flexCol">
+				<canvas id="myCanvas" width="600" height="400"></canvas>
 
-			<div style="flex: 1; padding: 10px;">
-				<p>
-					<strong>b0: </strong><span class="valorB"></span>
-				</p>
-				<p>
-					<strong>b1: </strong><span class="valorA"></span>
-				</p>
-				<p>
-					<strong>(P): </strong><span class="pointValue"></span>
-				</p>
-				<p>
-					<strong>FX(p): </strong><span class="valorFX"></span>
-				</p>
+			</div>
+
+			<div class="flex1" style="padding: 10px;">
+				<div>
+					<button onClick="executarAcao()">Gerar Grafico</button>
+					<!-- <button>Limpar</button> -->
+				</div>
+				<hr>
+				<div>
+					<div class="input">
+						<label for="xValues">
+							Insira os valores de X separados por virgula:
+						</label>
+						<input id="xValues" type="text" value="10, 11, 12, 13, 14, 15" placeholder="Ex: 10, 11, 12, 13" />
+					</div>
+					<br>
+					<div class="input">
+						<label for="yValues">
+							Insira os valores de Y separados por virgula:
+						</label>
+						<input id="yValues" type="text" value="100, 112, 119, 130, 139, 142" placeholder="Ex: 10, 11, 12, 13" />
+					</div>
+					<br>
+					<div class="input">
+						<label for="pValue">
+							Insira o valor para calcular a previsão: <small><sup>(Valor de P)</sup></small>
+						</label>
+						<input id="pValue" type="text" value="16" placeholder="" />
+					</div>
+					<p><sup><small>* a quantidade de valores em X tem que ser igual a quantidade de valores em Y</small></sup></p>
+				</div>
+				<div>
+					<div style="color: dodgerblue;">
+						<span>Base do Calculo:</span> <br>
+						<span class="valorDeX"></span> <br>
+						<span class="valorDeY"></span><br>
+						<span class="valorDeP"></span>
+						<br>
+						<br>
+					</div>
+
+					<span>
+						<strong>b0: </strong><span class="valorB"></span>
+					</span>
+					<br>
+					<span>
+						<strong>b1: </strong><span class="valorA"></span>
+					</span>
+					<br>
+					<!-- <span>
+						<strong>(P): </strong><span class="pointValue"></span>
+					</span>
+					<br> -->
+					<span>
+						<strong>FX(p): </strong><span class="valorFX"></span>
+					</span>
+					<br>
+					<span>
+						<strong>R²: </strong><span class="valorDeR2"></span>
+					</span>
+				</div>
 			</div>
 		</div>
 
