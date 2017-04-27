@@ -176,10 +176,6 @@ function drawResults(b0, b1, point, fx) {
 	cttx.fillText(resultText, p + cttx.measureText(resultText).width + 5,  (cnn.height - fx) + 90);
 }
 
-/**
- * TODO: Criar função para calcular a regreção e a Reta.
- */
-
 // var sXX = 0,
 // 	sYY = 0,
 // 	sXY = 0;
@@ -214,9 +210,9 @@ function calcRegressao() {
 
 	var r2 = ((x.length * somaxy) - (somax * somay)) / Math.sqrt((x.length * somax2 - Math.pow(somax, 2)) * (x.length * somay2 - Math.pow(somay, 2)));
 
-	el(".valorDeX").innerHTML = "x = [" + x.join(", ") + "]";
-	el(".valorDeY").innerHTML = "y = [" + y.join(", ") + "]";
-	el(".valorDeP").innerHTML = "P = " + p;
+	el(".valorDeX").innerHTML = "[" + x.join(", ") + "]";
+	el(".valorDeY").innerHTML = "[" + y.join(", ") + "]";
+	el(".valorDeP").innerHTML = p;
 	el(".valorDeR2").innerHTML = r2;
 
 	el(".valorA").innerHTML = b1;
