@@ -208,12 +208,12 @@ function calcRegressao() {
 	b0 = (somay / y.length) - b1 * (somax / x.length);
 	fx = b0 + b1 * p;
 
-	var r2 = ((x.length * somaxy) - (somax * somay)) / Math.sqrt((x.length * somax2 - Math.pow(somax, 2)) * (x.length * somay2 - Math.pow(somay, 2)));
+	var _r = ((x.length * somaxy) - (somax * somay)) / Math.sqrt((x.length * somax2 - Math.pow(somax, 2)) * (x.length * somay2 - Math.pow(somay, 2)));
 
 	el(".valorDeX").innerHTML = "[" + x.join(", ") + "]";
 	el(".valorDeY").innerHTML = "[" + y.join(", ") + "]";
 	el(".valorDeP").innerHTML = p;
-	el(".valorDeR2").innerHTML = r2;
+	el(".valorDeR").innerHTML = _r;
 
 	el(".valorA").innerHTML = b1;
 	el(".valorB").innerHTML = b0;
@@ -231,8 +231,6 @@ function calcRegressao() {
 drawPlanGraph(150);
 
 function executarAcao () {
-
-
 	var valoresDeX = el("#xValues").value.split(",").map(function(item) {
 		    return parseInt(item, 10);
 		}),
@@ -241,7 +239,7 @@ function executarAcao () {
 		}),
 		valorDeP = el("#pValue").value;
 
-	if (valoresDeX.length !== valoresDeY.length) {
+	if (valoresDeX.length !== valoresDeY.length || valoresDeX.length === 0 || valoresDeY.length === 0 ) {
 		el(".alert").innerHTML = "A quantidade de itens em X tem que ser igual a quantidade de itens em Y";
 		return false;
 	}
