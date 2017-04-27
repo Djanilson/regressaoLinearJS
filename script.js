@@ -231,14 +231,31 @@ function calcRegressao() {
 drawPlanGraph(150);
 
 function executarAcao () {
-	// cttx.clearRect(0, 0, cnn.width, cnn.height);
+
+
 	var valoresDeX = el("#xValues").value.split(",").map(function(item) {
 		    return parseInt(item, 10);
 		}),
 		valoresDeY = el("#yValues").value.split(",").map(function(item) {
 		    return parseInt(item, 10);
 		}),
-		valorDeP = el("#pValue").value.split(",");
+		valorDeP = el("#pValue").value;
+
+	if (valoresDeX.length !== valoresDeY.length) {
+		el(".alert").innerHTML = "A quantidade de itens em X tem que ser igual a quantidade de itens em Y";
+		return false;
+	}
+	else {
+		el(".alert").innerHTML = "";
+	}
+
+	if (valorDeP === "") {
+		el(".alert").innerHTML = "Insira um valor para P";
+		return false;
+	}
+	else {
+		el(".alert").innerHTML = "";
+	}
 
 	x = valoresDeX;
 	y = valoresDeY;
